@@ -24,15 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Check if WooCommerce is active
- *
- * @return bool
- */
-function nvm_is_woocommerce_active() {
-	return class_exists( 'WooCommerce' );
-}
-
-/**
  * Display admin notice if WooCommerce is not active.
  */
 function nvm_liberta_woocommerce_missing_notice() {
@@ -48,9 +39,6 @@ if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins',
 	add_action( 'admin_notices', 'nvm_liberta_woocommerce_missing_notice' );
 	return;
 }
-
-
-
 
 define( 'NVM_WEBHOOK_API_KEY', 'sdnafnHUIacJOKLbxuwkaheo823u90ujio@H*!9hdewiuhe2309' );
 define( 'NVM_WEBHOOK_LOGS', false );
