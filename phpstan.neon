@@ -1,0 +1,29 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - liberta.php
+
+    excludePaths:
+        - vendor/
+
+    # Bootstrap file for WordPress constants and functions
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+
+    # Ignore errors for WordPress core functions that might not be defined
+    ignoreErrors:
+        # WordPress core functions
+        - '#Function (add_action|add_filter|register_rest_route|current_time|get_posts|wc_get_product|wc_get_product_id_by_sku|rest_url|wp_json_encode|error_log|dbDelta|wc_update_product_stock_status|do_action|as_enqueue_async_action) not found\.#'
+        # WordPress classes
+        - '#Class (WP_REST_Server|WP_REST_Request|WP_REST_Response|WP_Error|WC_Product|DateTime) not found\.#'
+        # WordPress constants
+        - '#Constant (ABSPATH|WP_DEBUG) not found\.#'
+        # Global variables
+        - '#Variable \$wpdb might not be defined\.#'
+
+    # Set to true to check function arguments
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

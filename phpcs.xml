@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<ruleset name="Nevma Inventory Webhook">
+    <description>PHP CodeSniffer configuration for Nevma Inventory Webhook Liberta plugin</description>
+
+    <!-- What to scan -->
+    <file>.</file>
+
+    <!-- Exclude vendor directory -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+
+    <!-- Show progress -->
+    <arg value="p"/>
+
+    <!-- Show sniff codes in all reports -->
+    <arg value="s"/>
+
+    <!-- Use colors in output -->
+    <arg name="colors"/>
+
+    <!-- Check up to 20 files simultaneously -->
+    <arg name="parallel" value="20"/>
+
+    <!-- WordPress Coding Standards -->
+    <rule ref="WordPress">
+        <!-- Allow short array syntax -->
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- WordPress Extra Standards -->
+    <rule ref="WordPress-Extra">
+        <!-- Allow short array syntax -->
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- WordPress Documentation Standards -->
+    <rule ref="WordPress-Docs"/>
+
+    <!-- WooCommerce Coding Standards -->
+    <rule ref="WooCommerce-Core">
+        <!-- Allow short array syntax -->
+        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+    </rule>
+
+    <!-- Check for PHP cross-version compatibility with WordPress -->
+    <config name="testVersion" value="7.4-"/>
+    <rule ref="PHPCompatibilityWP"/>
+
+    <!-- Minimum WordPress version -->
+    <config name="minimum_supported_wp_version" value="5.9"/>
+
+    <!-- Minimum WooCommerce version -->
+    <config name="minimum_supported_wc_version" value="6.0"/>
+
+    <!-- WordPress text domain check -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="nevma-inventory-webhook"/>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- Disallow long array syntax -->
+    <rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
+
+    <!-- Security checks -->
+    <rule ref="WordPress.Security.EscapeOutput"/>
+    <rule ref="WordPress.Security.NonceVerification"/>
+    <rule ref="WordPress.Security.ValidatedSanitizedInput"/>
+
+    <!-- Additional rules -->
+    <rule ref="WordPress.DB.PreparedSQL"/>
+    <rule ref="WordPress.DB.DirectDatabaseQuery"/>
+</ruleset>

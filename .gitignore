@@ -1,0 +1,20 @@
+# Composer dependencies
+/vendor/
+composer.lock
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PHPStan cache
+/phpstan-cache/
+.phpstan.cache
+
+# PHPCS cache
+.phpcs-cache
