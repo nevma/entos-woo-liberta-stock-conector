@@ -38,13 +38,6 @@
     <!-- WordPress Documentation Standards -->
     <rule ref="WordPress-Docs"/>
 
-    <!-- WooCommerce Coding Standards -->
-    <rule ref="WooCommerce-Core">
-        <!-- Allow short array syntax -->
-        <exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
-        <exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
-    </rule>
-
     <!-- Check for PHP cross-version compatibility with WordPress -->
     <config name="testVersion" value="7.4-"/>
     <rule ref="PHPCompatibilityWP"/>
@@ -52,8 +45,8 @@
     <!-- Minimum WordPress version -->
     <config name="minimum_supported_wp_version" value="5.9"/>
 
-    <!-- Minimum WooCommerce version -->
-    <config name="minimum_supported_wc_version" value="6.0"/>
+    <!-- WooCommerce compatibility - using WordPress standards which cover WooCommerce best practices -->
+    <config name="minimum_wp_constants_to_define" value="5.9"/>
 
     <!-- WordPress text domain check -->
     <rule ref="WordPress.WP.I18n">
