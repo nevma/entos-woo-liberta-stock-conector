@@ -33,26 +33,24 @@ function nvm_is_woocommerce_active() {
 }
 
 /**
- * Display admin notice if WooCommerce is not active
- *
- * @return void
+ * Display admin notice if WooCommerce is not active.
  */
-function nvm_woocommerce_missing_notice() {
+function nvm_liberta_woocommerce_missing_notice() {
 	?>
 	<div class="notice notice-error">
-		<p>
-			<strong><?php esc_html_e( 'Nevma Inventory Webhook Liberta', 'nevma-inventory-webhook' ); ?></strong>
-			<?php esc_html_e( 'requires WooCommerce to be installed and active.', 'nevma-inventory-webhook' ); ?>
-		</p>
+		<p><?php esc_html_e( 'SAP Order Sync for WooCommerce Connector requires WooCommerce to be installed and active.', 'esap' ); ?></p>
 	</div>
 	<?php
 }
 
-// Check if WooCommerce is active before loading the plugin
-if ( ! nvm_is_woocommerce_active() ) {
-	add_action( 'admin_notices', 'nvm_woocommerce_missing_notice' );
+// Check if WooCommerce is active.
+if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
+	add_action( 'admin_notices', 'nvm_liberta_woocommerce_missing_notice' );
 	return;
 }
+
+
+
 
 define( 'NVM_WEBHOOK_API_KEY', 'sdnafnHUIacJOKLbxuwkaheo823u90ujio@H*!9hdewiuhe2309' );
 define( 'NVM_WEBHOOK_LOGS', false );
