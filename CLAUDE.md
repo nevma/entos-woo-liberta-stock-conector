@@ -34,7 +34,9 @@ This is a WordPress plugin called "Nevma Inventory Webhook Liberta" that receive
 5. **Logging System**:
    - Database table: `wp_nvm_webhook_logs`
    - Debug logging controlled by `NVM_WEBHOOK_LOGS` constant (currently false at liberta.php:27)
-   - Admin interface at Tools > Webhook Logs showing recent activity
+   - Admin interface location:
+     - If SAP Connector menu exists: SAP Connector > Liberta Inventory
+     - Otherwise: Tools > Webhook Logs
 
 ### Payload Structure
 
@@ -100,16 +102,17 @@ composer phpcbf
 composer phpstan
 ```
 
-The project follows WordPress and WooCommerce coding standards and includes:
+The project follows WordPress coding standards and includes:
 - WordPress Core standards
 - WordPress Extra standards
 - WordPress Documentation standards
-- WooCommerce Core standards
-- PHP 7.4+ compatibility checks (WordPress-aware)
+- PHP 7.4+ compatibility checks (WordPress-aware via PHPCompatibilityWP)
 - Security checks (escaping, nonce verification, sanitization)
 - Database query validation
 - Minimum WordPress version: 5.9
 - Minimum WooCommerce version: 6.0
+
+**Note**: WooCommerce-specific sniffs are not used due to outdated dependencies. WordPress standards cover WooCommerce best practices.
 
 ### Testing the Webhook
 
@@ -129,8 +132,14 @@ To enable IP and API key validation:
 
 ### Viewing Logs
 
-- Navigate to WordPress Admin > Tools > Webhook Logs
-- Or query database: `SELECT * FROM wp_nvm_webhook_logs ORDER BY created_at DESC`
+**Admin Interface:**
+- If SAP Connector plugin is active: WordPress Admin > SAP Connector > Liberta Inventory
+- Otherwise: WordPress Admin > Tools > Webhook Logs
+
+**Database Query:**
+```sql
+SELECT * FROM wp_nvm_webhook_logs ORDER BY created_at DESC
+```
 
 ## Key Behavior Notes
 
@@ -138,3 +147,12 @@ To enable IP and API key validation:
 - Returns HTTP 200 on success, 207 Multi-Status on partial failures
 - Variation stock updates trigger parent variable product recalculation
 - Product saves are optimized to only occur when actual changes are detected
+
+## Important Codebase Characteristics
+
+- **Single-file plugin**: All functionality is in `liberta.php` - no class-based architecture
+- **No namespacing**: Uses function prefixes (`nvm_`) to avoid conflicts
+- **Action Scheduler dependency**: WordPress plugin must be active for async processing
+- **Database schema**: Auto-creates `wp_nvm_webhook_logs` table on first use via `dbDelta()`
+- **WooCommerce coupling**: Direct dependency on WooCommerce functions (`wc_get_product`, `wc_get_product_id_by_sku`, etc.)
+- **Menu integration**: Checks for SAP Connector menu (slug: `sap-connector`) and adds as submenu if present, otherwise falls back to Tools menu

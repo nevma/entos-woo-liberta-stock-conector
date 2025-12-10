@@ -589,21 +589,48 @@ function nvm_create_webhook_logs_table() {
 /**
  * Admin dashboard to view webhook logs
  */
-add_action( 'admin_menu', 'nvm_add_webhook_admin_menu' );
+add_action( 'admin_menu', 'nvm_add_webhook_admin_menu', 10 );
 
 /**
  * Add webhook admin menu
+ * Checks if SAP Connector menu exists and adds as submenu if available.
+ * Otherwise adds under Tools menu.
  *
  * @return void
  */
 function nvm_add_webhook_admin_menu() {
-	add_management_page(
-		'Inventory Webhook Logs',
-		'Webhook Logs',
-		'manage_options',
-		'nvm-webhook-logs',
-		'nvm_webhook_logs_page'
-	);
+	global $menu;
+
+	$sap_menu_exists = false;
+	if ( is_array( $menu ) ) {
+		foreach ( $menu as $menu_item ) {
+			if ( isset( $menu_item[2] ) && 'sap-connector' === $menu_item[2] ) {
+				$sap_menu_exists = true;
+				break;
+			}
+		}
+	}
+
+	if ( $sap_menu_exists ) {
+		// Add as submenu under SAP Connector if it exists.
+		add_submenu_page(
+			'sap-connector',
+			'Liberta Inventory',
+			'Liberta Inventory',
+			'manage_options',
+			'nvm-webhook-logs',
+			'nvm_webhook_logs_page'
+		);
+	} else {
+		// Add under Tools menu if SAP Connector doesn't exist.
+		add_management_page(
+			'Inventory Webhook Logs',
+			'Webhook Logs',
+			'manage_options',
+			'nvm-webhook-logs',
+			'nvm_webhook_logs_page'
+		);
+	}
 }
 
 /**
