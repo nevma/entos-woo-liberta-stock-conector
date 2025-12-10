@@ -152,6 +152,7 @@ SELECT * FROM wp_nvm_webhook_logs ORDER BY created_at DESC
 
 - **Single-file plugin**: All functionality is in `liberta.php` - no class-based architecture
 - **No namespacing**: Uses function prefixes (`nvm_`) to avoid conflicts
+- **WooCommerce dependency**: Plugin checks for WooCommerce on load (liberta.php:52) and shows admin notice if not active
 - **Action Scheduler dependency**: WordPress plugin must be active for async processing
 - **Database schema**: Auto-creates `wp_nvm_webhook_logs` table on first use via `dbDelta()`
 - **WooCommerce coupling**: Direct dependency on WooCommerce functions (`wc_get_product`, `wc_get_product_id_by_sku`, etc.)

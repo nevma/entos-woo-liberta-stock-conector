@@ -23,6 +23,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Check if WooCommerce is active
+ *
+ * @return bool
+ */
+function nvm_is_woocommerce_active() {
+	return class_exists( 'WooCommerce' );
+}
+
+/**
+ * Display admin notice if WooCommerce is not active
+ *
+ * @return void
+ */
+function nvm_woocommerce_missing_notice() {
+	?>
+	<div class="notice notice-error">
+		<p>
+			<strong><?php esc_html_e( 'Nevma Inventory Webhook Liberta', 'nevma-inventory-webhook' ); ?></strong>
+			<?php esc_html_e( 'requires WooCommerce to be installed and active.', 'nevma-inventory-webhook' ); ?>
+		</p>
+	</div>
+	<?php
+}
+
+// Check if WooCommerce is active before loading the plugin
+if ( ! nvm_is_woocommerce_active() ) {
+	add_action( 'admin_notices', 'nvm_woocommerce_missing_notice' );
+	return;
+}
+
 define( 'NVM_WEBHOOK_API_KEY', 'sdnafnHUIacJOKLbxuwkaheo823u90ujio@H*!9hdewiuhe2309' );
 define( 'NVM_WEBHOOK_LOGS', false );
 
